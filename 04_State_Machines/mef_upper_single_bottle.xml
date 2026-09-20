@@ -1,0 +1,195 @@
+<mxGraphModel>
+  <root>
+    <Workflow label="Designer" description="" href="" id="0">
+      <mxCell />
+    </Workflow>
+    <Layer label="Sheet" id="1">
+      <mxCell parent="0" />
+    </Layer>
+    <Shape name="Start" action="YV=0; YA=0; Y1=0; Y2=0; Y3=0; YM=0" id="2">
+      <mxCell style="initial" parent="1" vertex="1">
+        <mxGeometry x="300" y="220" width="240" height="170" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Edge condition="Start &amp;&amp; XV" action="t.set(0);C=0" id="5">
+      <mxCell parent="1" source="2" target="3" edge="1">
+        <mxGeometry x="0.0013" y="20" relative="1" as="geometry">
+          <mxPoint as="offset" />
+          <Array as="points">
+            <mxPoint x="640" y="300" />
+          </Array>
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="X1==1" action="t.set(0)" id="23">
+      <mxCell parent="1" source="10" target="21" edge="1">
+        <mxGeometry y="20" relative="1" as="geometry">
+          <mxPoint x="890" y="430" as="sourcePoint" />
+          <mxPoint x="1280" y="340" as="targetPoint" />
+          <Array as="points" />
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Shape name="BANDA_Y_SENSORP" action="YV=0; YA=0; Y1=1; Y2=0; Y3=0; YM=1" id="10">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="1150" y="450" width="220" height="120" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Shape name="SENSOR2" action="YV = 0; YA=0; Y1=0; Y2=1; Y3=0; YM=1" id="21">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="1100" y="210" width="260" height="130" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Edge condition="Stop" action="" id="30">
+      <mxCell parent="1" source="19" target="2" edge="1">
+        <mxGeometry y="10" relative="1" as="geometry">
+          <mxPoint x="2240" y="430.00000000000006" as="sourcePoint" />
+          <mxPoint x="390.00000000000006" y="390.00000000000006" as="targetPoint" />
+          <Array as="points">
+            <mxPoint x="1350" y="740" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Shape name="UBICACIONFINAL" action="YV=1; YA=0; Y1=0; Y2=0; Y3=0; YM=0" id="19">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="2160" y="430" width="220" height="130" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Shape name="BANDAT" action="YV=0; YA=0; Y1=0; Y2=0; Y3=0; YM=1" id="17">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="1850" y="430" width="210" height="130" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Shape name="SENSOR3" action="YV=0; YA=0; Y1=0; Y2=0; Y3=1; YM=1" id="15">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="1530" y="430" width="200" height="120" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Shape name="REINICIO" action="YV=1; YA=0; Y1=0; Y2=0; Y3=0; YM=0" id="6">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="720" y="60" width="210" height="120" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Shape name="llenadoEnvase" action="YV = 0; YA=1; Y1=0; Y2=0; Y3=0; YM=0" id="3">
+      <mxCell style="state" parent="1" vertex="1">
+        <mxGeometry x="720" y="230" width="220" height="140" as="geometry" />
+      </mxCell>
+    </Shape>
+    <Edge condition="Start &amp;&amp; !XV" action="t.set(0)" id="8">
+      <mxCell parent="1" source="2" target="6" edge="1">
+        <mxGeometry relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="620" y="160" />
+          </Array>
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="XV &amp;&amp; !XA" action="t.set(0);C=0" id="9">
+      <mxCell parent="1" source="6" target="3" edge="1">
+        <mxGeometry x="-0.1984" y="70" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="830" y="200" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="!XV &amp;&amp; XA" action="t.set(0)" id="11">
+      <mxCell parent="1" source="3" target="10" edge="1">
+        <mxGeometry x="-0.0041" y="-40" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="830" y="400" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="(t.get()&gt;=4)" action="t.set(0)" id="18">
+      <mxCell parent="1" source="15" target="17" edge="1">
+        <mxGeometry y="20" relative="1" as="geometry">
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="(t.get()&gt;=2)" action="t.set(0)" id="20">
+      <mxCell parent="1" source="17" target="19" edge="1">
+        <mxGeometry x="0.0033" y="20" relative="1" as="geometry">
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="X2==1" action="t.set(0)" id="24">
+      <mxCell parent="1" source="21" target="15" edge="1">
+        <mxGeometry y="20" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="1630" y="250" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="Stop" action="" id="31">
+      <mxCell parent="1" source="17" target="2" edge="1">
+        <mxGeometry x="0.0022" y="10" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="1180" y="710" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="Stop" action="" id="32">
+      <mxCell parent="1" source="15" target="2" edge="1">
+        <mxGeometry x="0.0055" y="10" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="1030" y="670" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="Stop" action="" id="34">
+      <mxCell parent="1" source="10" target="2" edge="1">
+        <mxGeometry y="20" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="630" y="600" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="Stop" action="" id="36">
+      <mxCell parent="1" source="21" target="2" edge="1">
+        <mxGeometry x="0.0159" y="-30" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="820" y="20" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="Stop" action="" id="38">
+      <mxCell parent="1" source="6" target="2" edge="1">
+        <mxGeometry x="-0.2231" y="-30" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="620" y="40" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+    <Edge condition="Stop" action="" id="41">
+      <mxCell parent="1" source="3" target="2" edge="1">
+        <mxGeometry x="-0.0097" y="-10" relative="1" as="geometry">
+          <Array as="points">
+            <mxPoint x="630" y="380" />
+          </Array>
+          <mxPoint as="offset" />
+        </mxGeometry>
+      </mxCell>
+    </Edge>
+  </root>
+</mxGraphModel>
