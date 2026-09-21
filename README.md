@@ -7,7 +7,7 @@ designed for **2,000–3,000 units per day**.
 **CAP — Control Automático de Procesos · Universidad EAFIT**
 
 <p align="center">
-  <img src="docs/images/process_layout.jpeg" width="620" alt="Plant layout: filling, sealing and packaging along the conveyor">
+  <img src="docs/images/process_overview.png" width="100%" alt="EcoShamp production line: the seven subprocesses along the conveyor, with the sensors and actuators used at each stage">
 </p>
 
 ### ▶ Videos
