@@ -92,7 +92,6 @@ function procLine(host, S, opts = {}) {
   const arm = { x: 512, y: 100 };
   let packs = [];          // packs moving to the tunnel / boxes
   let lastBottles = S.bottles, clock = 0, belt = 0, boxes = 0;
-  const clouds = [[40, 50, 1], [220, 60, .7], [410, 46, 1.2], [560, 64, .8]];
 
   // ---------- building blocks ----------
   function lamp(x, y, on, c) { R(x, y, 3, 3, C.out); R(x + 1, y + 1, 1, 1, on ? c : C.off); if (on) { P(x + 1, y, c); } }
@@ -193,11 +192,6 @@ function procLine(host, S, opts = {}) {
 
     g.setTransform(1, 0, 0, 1, 0, -TOP);
     g.drawImage(bg, 0, 0);
-    // clouds (always drift)
-    for (const cl of clouds) {
-      const x = ((cl[0] + performance.now() / 1000 * 3 * cl[2]) % (W + 60)) - 30, y = cl[1];
-      R(x, y, 22, 4, '#dfeef4'); R(x + 4, y - 3, 12, 3, '#eef6f9'); R(x + 8, y - 5, 6, 2, '#f7fbfc'); R(x + 2, y + 4, 18, 1, '#bcd3de'); R(x + 14, y - 2, 6, 2, '#f3cadb');
-    }
 
     // floor shadows under the machines
     for (const [x, w] of [[6, 110], [126, 70], [202, 64], [286, 72], [372, 48], [430, 160], [598, 42]]) R(x, GY, w, 2, 'rgba(0,0,0,.28)');
