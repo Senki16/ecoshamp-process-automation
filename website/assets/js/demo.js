@@ -122,6 +122,9 @@ function step(dt) {
   }));
 }
 
+// Stage zones on the procedural line (percent of its width)
+const PROC_ZONES = [[0, 18.8], [18.8, 31.3], [31.3, 44], [44, 56.6], [56.6, 67.2], [67.2, 93.4], [93.4, 100]];
+
 // ---- UI
 document.addEventListener('DOMContentLoaded', () => {
   let sel = 0, tab = 'flow';
@@ -129,11 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // stepper + line labels
   $('#dstep').innerHTML = STAGES.map((s, i) => `${i ? '<span class="arrow-sep" aria-hidden="true">→</span>' : ''}<button class="step" data-i="${i}"><span class="num ghost">${s.n}</span><span>${esc(s.name)}</span></button>`).join('');
   $('#dline').insertAdjacentHTML('beforeend',
-    STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${s.simZone[0]}%;width:${s.simZone[1] - s.simZone[0]}%"></div>`).join('') +
-    STAGES.map((s, i) => `<button class="lbl" data-i="${i}" style="left:${(s.simZone[0] + s.simZone[1]) / 2}%"><span class="num">${s.n}</span>${esc(s.short)}</button>`).join(''));
+    STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${PROC_ZONES[i][0]}%;width:${PROC_ZONES[i][1] - PROC_ZONES[i][0]}%"></div>`).join('') +
+    STAGES.map((s, i) => `<button class="lbl" data-i="${i}" style="left:${(PROC_ZONES[i][0] + PROC_ZONES[i][1]) / 2}%"><span class="num">${s.n}</span>${esc(s.short)}</button>`).join(''));
   $('#live-sel').innerHTML = $('#chart-stage').innerHTML = STAGES.map((s, i) => `<option value="${i}">Stage ${s.n} · ${esc(s.short)}</option>`).join('');
 
-  const belt = lineSim($('#dsim'), { speed: () => sim.speed / 100, running: () => sim.running });
+  const belt = procLine($('#dsim'), sim, { zones: PROC_ZONES, onPick: i => pick(i) });
 
   // controls
   const setBtns = () => {
