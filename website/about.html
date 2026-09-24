@@ -52,7 +52,8 @@
 </style>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/linesim.js"></script>
+<script src="assets/js/procline.js"></script>
+<script src="assets/js/sim.js"></script>
 </head>
 <body>
 <main>
@@ -133,7 +134,7 @@
 </main>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  lineSim($('#asim'));
+  autoLine($('#asim'));
   $('#team').innerHTML = TEAM.map(([name, role, n]) => {
     const ini = name.split(' ').filter(w => /^[A-ZÁÉÍÓÚ]/.test(w)).slice(0, 2).map(w => w[0]).join('');
     return `<div class="card ${n === 6 ? 'me' : ''}"><div class="av">${ini}</div><b>${esc(name)}</b><span class="n">Stage ${n}</span><span class="role">${esc(role)}</span></div>`;

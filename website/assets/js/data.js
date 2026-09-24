@@ -7,7 +7,6 @@ const ICON = IMG + 'icons/';
 const STAGES = [
   {
     n: 1, id: 'reception', name: 'Raw Materials Reception & Storage', short: 'Raw Materials',
-    simZone: [0, 18.5],
     owner: 'Martín Jaramillo', icon: ICON + 's_level.png',
     sprites: ['tank_h2o', 'tank_leaf', 'tank_flask'],
     zone: [0, 19.5],
@@ -33,7 +32,6 @@ const STAGES = [
   },
   {
     n: 2, id: 'mixing', name: 'Mixing Preparation', short: 'Mixing',
-    simZone: [18.5, 29.3],
     owner: 'Juan Diego Guerra', icon: ICON + 's_weight.png',
     sprites: ['mixer'],
     zone: [19.5, 30],
@@ -58,7 +56,6 @@ const STAGES = [
   },
   {
     n: 3, id: 'homogenization', name: 'Homogenization', short: 'Homogenization',
-    simZone: [29.3, 41.2],
     owner: 'Miguel Vargas', icon: ICON + 'a_mixer_motor.png',
     sprites: ['homogenizer'],
     zone: [30, 44],
@@ -81,7 +78,6 @@ const STAGES = [
   },
   {
     n: 4, id: 'filtration', name: 'Filtration', short: 'Filtration',
-    simZone: [41.2, 53.8],
     owner: 'Alejandro Muriel', icon: ICON + 's_filter_integrity.png',
     sprites: ['filters'],
     zone: [44, 59],
@@ -103,7 +99,6 @@ const STAGES = [
   },
   {
     n: 5, id: 'filling', name: 'Bottle Filling', short: 'Bottle Filling',
-    simZone: [53.8, 69.5],
     owner: 'Juan Esteban López', icon: ICON + 'a_bottle_filler.png',
     sprites: ['filler'],
     zone: [59, 72.5],
@@ -125,7 +120,6 @@ const STAGES = [
   },
   {
     n: 6, id: 'packaging', name: 'Labeling & Packaging', short: 'Labeling & Packaging',
-    simZone: [69.5, 90.8],
     owner: 'David Zuluaga Henao', icon: ICON + 'a_labeling_machine.png',
     sprites: ['robot_arm', 'labeler'],
     zone: [72.5, 88],
@@ -156,7 +150,6 @@ const STAGES = [
   },
   {
     n: 7, id: 'final', name: 'Final Product', short: 'Final Product',
-    simZone: [90.8, 100],
     owner: 'Whole team', icon: ICON + 's_presence.png',
     sprites: ['boxes', 'bottles'],
     zone: [88, 100],
