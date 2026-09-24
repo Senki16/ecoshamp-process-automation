@@ -311,7 +311,7 @@ dialog p { margin-top: 12px; color: var(--text-2); }
 dialog .close { float: right; background: none; border: 0; color: var(--text); font-size: 22px; cursor: pointer; }
 
 /* ---------- Demo page ---------- */
-.demo-line { position: relative; margin-top: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #0a2c43; }
+.demo-line { position: relative; margin-top: 14px; }
 .demo-line img.line { width: 100%; }
 .demo-line .lbl { position: absolute; top: 6px; display: flex; align-items: center; gap: 6px; padding: 4px 8px; background: rgba(5,23,38,.85); border: 1px solid var(--line-strong); border-radius: 5px; font-size: 12px; font-weight: 700; cursor: pointer; color: var(--text); font-family: var(--body); transform: translateX(-50%); white-space: nowrap; }
 .demo-line .lbl .num { width: 20px; height: 20px; font-size: 11px; }

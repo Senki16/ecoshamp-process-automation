@@ -379,10 +379,12 @@ function procLine(host, S, opts = {}) {
   const fx = document.createElement('canvas'); fx.width = W; fx.height = H;
   (function () {
     const c = fx.getContext('2d');
+    // only below the horizon, so the sky stays the exact colour of the banner above it
+    const Y0 = 100;
     const lg = c.createLinearGradient(0, 0, W, 0); lg.addColorStop(0, 'rgba(255,240,200,.07)'); lg.addColorStop(.5, 'rgba(255,255,255,0)'); lg.addColorStop(1, 'rgba(0,10,20,.12)');
-    c.fillStyle = lg; c.fillRect(0, 0, W, H);
-    const vg = c.createLinearGradient(0, TOP, 0, H); vg.addColorStop(0, 'rgba(0,0,0,.18)'); vg.addColorStop(.25, 'rgba(0,0,0,0)'); vg.addColorStop(.9, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.25)');
-    c.fillStyle = vg; c.fillRect(0, 0, W, H);
+    c.fillStyle = lg; c.fillRect(0, Y0, W, H - Y0);
+    const vg = c.createLinearGradient(0, Y0, 0, H); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(.8, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.25)');
+    c.fillStyle = vg; c.fillRect(0, Y0, W, H - Y0);
   })();
 
   let last = performance.now();

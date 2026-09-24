@@ -54,7 +54,7 @@ function bannerSky(banner) {
     if (nw === W && nh === H) return;
     W = nw; H = nh; cv.width = W; cv.height = H;
     // keep clouds and planes in the open sky above the animated line
-    const stop = banner.querySelector('#line-sim, .demo-line, #asim, #pline');
+    const stop = banner.querySelector('#line-sim, .demo-line, #asim, #pline, #hotspots');
     skyH = stop ? Math.max(20, stop.offsetTop / PX) : H;
     if (!clouds.length) {
       const count = Math.max(4, Math.round(W / 70));
