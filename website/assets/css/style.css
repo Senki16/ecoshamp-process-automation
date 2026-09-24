@@ -15,6 +15,8 @@
   --text: #e7f4ef;
   --text-2: #a9c3cc;
   --muted: #7896a3;
+  --olive: #3b4a2b;
+  --olive-2: #33412a;
   --radius: 6px;
   --display: "Silkscreen", "Press Start 2P", monospace;
   --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -119,11 +121,9 @@ p { margin: 0; }
 /* ---------- Hero / banners ---------- */
 .banner {
   position: relative; overflow: hidden;
-  background: linear-gradient(#0b3552, #0a2a3f 55%, var(--bg));
+  background: var(--olive);
   border-bottom: 1px solid var(--line);
 }
-.banner .sky { position: absolute; inset: 0; background: url(../img/landscape.webp) center 30% / cover; opacity: .55; }
-.banner .sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,23,38,.25), rgba(5,23,38,.1) 50%, rgba(5,23,38,.9)); }
 .banner > .wrap { position: relative; }
 
 .hero .wrap { display: grid; grid-template-columns: 300px 1fr 220px; gap: 24px; align-items: center; padding-top: 34px; padding-bottom: 20px; }
@@ -177,7 +177,8 @@ p { margin: 0; }
 
 /* ---------- About / impact ---------- */
 .impact { position: relative; overflow: hidden; }
-.impact .bg { position: absolute; inset: 0; background: url(../img/forest_band.webp) bottom / cover; opacity: .35; }
+.impact { background: var(--olive); }
+.impact .bg { display: none; }
 .impact .wrap { position: relative; display: grid; grid-template-columns: 380px 1fr; gap: 36px; align-items: center; }
 .impact h2 { font-family: var(--display); font-size: 26px; text-transform: uppercase; letter-spacing: 1px; }
 .impact p { margin-top: 10px; color: var(--text); }
@@ -192,7 +193,8 @@ p { margin: 0; }
 .stat span { font-size: 12px; color: var(--text-2); }
 
 .cta { position: relative; overflow: hidden; padding: 30px 0; }
-.cta .bg { position: absolute; inset: 0; background: url(../img/forest_strip.webp) center / cover; opacity: .45; }
+.cta { background: var(--olive-2); }
+.cta .bg { display: none; }
 .cta .wrap { position: relative; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; text-align: left; }
 .cta h2 { font-family: var(--display); font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -228,7 +230,7 @@ footer .wrap { position: relative; display: flex; justify-content: space-between
 .inputs span { font-size: 13px; color: var(--text-2); }
 .scene {
   position: relative; border-radius: 6px; overflow: hidden; border: 1px solid var(--line-strong);
-  background: url(../img/landscape.webp) center 20% / cover;
+  background: var(--olive-2);
   display: flex; align-items: flex-end; justify-content: center; gap: 10px; padding: 26px 16px 0; min-height: 250px;
 }
 .scene::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: url(../img/conveyor_frame.webp) center / cover; opacity: .9; }
@@ -333,7 +335,7 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 
 .kpi span { font-size: 11.5px; color: var(--text-2); line-height: 1.2; display: block; }
 .demo-grid-2 { display: grid; grid-template-columns: 1fr 1.7fr 1.2fr; gap: 12px; margin-top: 12px; }
 .demo-grid-2 > .panel { padding: 14px 16px; }
-.info-scene { height: 110px; border-radius: 6px; margin-top: 10px; background: url(../img/landscape.webp) center 20% / cover; display: flex; align-items: flex-end; justify-content: center; gap: 4px; overflow: hidden; border: 1px solid var(--line-strong); }
+.info-scene { height: 110px; border-radius: 6px; margin-top: 10px; background: var(--olive-2); display: flex; align-items: flex-end; justify-content: center; gap: 4px; overflow: hidden; border: 1px solid var(--line-strong); }
 .info-scene img { max-height: 96px; width: auto; }
 .info-title { display: flex; gap: 10px; align-items: center; margin-top: 12px; font-weight: 700; font-size: 16px; }
 .info-desc { font-size: 14px; color: var(--text); margin-top: 8px; }
