@@ -13,8 +13,7 @@
 <style>
   .about-hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 24px; align-items: center; padding-top: 30px; padding-bottom: 20px; }
   .about-hero .intro { border-left: 3px solid var(--green); padding-left: 16px; margin-top: 22px; font-size: 16px; }
-  .about-hero .art { border-radius: 8px; overflow: hidden; border: 1px solid var(--line-strong); background: url(assets/img/landscape.webp) center 20% / cover; padding-top: 40px; }
-  .about-hero .art img { width: 100%; }
+  .about-hero .art { border-radius: 8px; overflow: hidden; border: 1px solid var(--line-strong); }
   .obj { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
   .obj .panel { padding: 20px; }
   .obj h2, .blk h2 { font-family: var(--display); font-size: 20px; letter-spacing: 1px; text-transform: uppercase; display: flex; gap: 12px; align-items: center; }
@@ -53,6 +52,7 @@
 </style>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
+<script src="assets/js/linesim.js"></script>
 </head>
 <body>
 <main>
@@ -63,7 +63,7 @@
         <div class="leafs" style="margin-top:12px"><img class="px" src="assets/img/f_leaf.png" alt=""><span class="title-sub">The project</span><img class="px" src="assets/img/f_leaf.png" alt="" style="transform:scaleX(-1)"></div>
         <p class="intro">EcoShamp is a university project on the design and automation of a small-scale production line for natural shampoo — integrating sustainability, efficiency and modern control systems. It was developed for CAP (Control Automático de Procesos) at Universidad EAFIT.</p>
       </div>
-      <div class="art"><img class="px" src="assets/img/line_full.webp" alt="The EcoShamp production line"></div>
+      <div class="art"><div id="asim" role="img" aria-label="Animated EcoShamp production line"></div></div>
     </div>
   </section>
 
@@ -133,6 +133,7 @@
 </main>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  lineSim($('#asim'));
   $('#team').innerHTML = TEAM.map(([name, role, n]) => {
     const ini = name.split(' ').filter(w => /^[A-ZÁÉÍÓÚ]/.test(w)).slice(0, 2).map(w => w[0]).join('');
     return `<div class="card ${n === 6 ? 'me' : ''}"><div class="av">${ini}</div><b>${esc(name)}</b><span class="n">Stage ${n}</span><span class="role">${esc(role)}</span></div>`;
