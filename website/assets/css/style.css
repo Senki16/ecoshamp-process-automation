@@ -462,3 +462,44 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 
 .head-row { flex-wrap: wrap; }
 .mini-sel { max-width: 100%; min-width: 0; }
 @media (max-width: 1180px) { .hero-title { order: -1; } }
+
+/* ---------- Animated production line ---------- */
+.ls-host { position: relative; overflow: hidden; width: 100%; }
+.ls { position: absolute; left: 0; top: 0; transform-origin: 0 0; overflow: hidden; }
+.ls-sky { position: absolute; inset: 0; background: linear-gradient(#123f63, #1f6b92 45%, #298aa0 60%); }
+.ls-trees { position: absolute; left: 0; right: 0; bottom: 18px; height: 144px; background: url(../img/forest_strip.webp) repeat-x bottom / auto 150px; }
+.ls-pipes { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ls-pipes .p { fill: none; stroke: #8fa3ae; stroke-width: 9; stroke-linejoin: round; }
+.ls-pipes .p { filter: drop-shadow(0 2px 0 #2c3d48); }
+.ls-pipes .f { fill: none; stroke: #6fd2ff; stroke-width: 3; stroke-dasharray: 6 12; stroke-linecap: round; animation: ls-flow 1s linear infinite; }
+@keyframes ls-flow { to { stroke-dashoffset: -18; } }
+.ls-belt { position: absolute; left: 0; right: 0; height: 18px; border-top: 3px solid #c9d5db; border-bottom: 3px solid #43545f;
+  background: repeating-linear-gradient(90deg, #5d707c 0 14px, #8ea2ad 14px 18px, #5d707c 18px 32px); animation: ls-belt 0.9s linear infinite; }
+@keyframes ls-belt { to { background-position: 32px 0; } }
+.ls-legs { position: absolute; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(90deg, transparent 0 60px, #6f828d 60px 68px, transparent 68px 128px) , linear-gradient(#3c5a3a, #2a4430); }
+.ls-m { position: absolute; bottom: 41px; filter: drop-shadow(0 3px 2px rgba(0,0,0,.35)); }
+.ls-m.arm { transform-origin: 30% 95%; animation: ls-arm 3.2s ease-in-out infinite; }
+@keyframes ls-arm { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(4deg) translateY(-2px); } }
+.ls-m.boxes { animation: ls-box 1.9s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes ls-box { 0%, 85%, 100% { transform: scale(1); } 92% { transform: scale(1.03, .97); } }
+.ls-gear { position: absolute; width: 26px; height: 26px; animation: ls-spin 2.4s linear infinite; }
+.ls-gear.rev { animation-direction: reverse; animation-duration: 1.6s; }
+@keyframes ls-spin { to { transform: rotate(360deg); } }
+.ls-drop { position: absolute; top: 92px; width: 5px; height: 8px; border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; background: #b8f5c8; box-shadow: 0 0 5px #7ee39a; animation: ls-drop 1s ease-in infinite; }
+@keyframes ls-drop { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(40px); opacity: 0; } }
+.ls-led { position: absolute; width: 6px; height: 6px; background: #ff5d5d; box-shadow: 0 0 6px #ff5d5d; z-index: 2; animation: ls-led 1.1s steps(1) infinite; }
+@keyframes ls-led { 50% { background: #5fe07c; box-shadow: 0 0 6px #5fe07c; } }
+.ls-bubble { position: absolute; top: 150px; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid #d4f3ff; background: rgba(160,220,255,.35); z-index: 3; animation: ls-bub 3.5s ease-in infinite; }
+@keyframes ls-bub { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(6px, -70px); opacity: 0; } }
+.ls-bottles { position: absolute; inset: 0; z-index: 1; }
+.ls-bottle { position: absolute; top: 176px; width: 26px; height: auto; margin-left: -13px; filter: saturate(.6) brightness(.95); }
+.ls-bottle.labeled { filter: none; }
+.ls-m { z-index: 2; }
+.ls-gear, .ls-drop { z-index: 3; }
+.ls.paused *, .ls.paused { animation-play-state: paused !important; }
+.ls img { max-width: none; }
+.ls .ls-m { width: auto; }
+.ls .ls-gear { width: 26px; }
+.ls .ls-bottle { width: 26px; }
+.ls-cloud { position: absolute; width: 64px; height: 14px; background: #e9f3f7; opacity: .85; box-shadow: 14px -8px 0 0 #e9f3f7, 32px -12px 0 2px #e9f3f7, 48px -4px 0 0 #f7c6dc, -10px 4px 0 -2px #c8dbe4; animation: ls-cloud linear infinite alternate; }
+@keyframes ls-cloud { to { transform: translateX(120px); } }
