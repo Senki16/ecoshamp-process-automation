@@ -503,3 +503,4 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 
 .ls .ls-bottle { width: 26px; }
 .ls-cloud { position: absolute; width: 64px; height: 14px; background: #e9f3f7; opacity: .85; box-shadow: 14px -8px 0 0 #e9f3f7, 32px -12px 0 2px #e9f3f7, 48px -4px 0 0 #f7c6dc, -10px 4px 0 -2px #c8dbe4; animation: ls-cloud linear infinite alternate; }
 @keyframes ls-cloud { to { transform: translateX(120px); } }
+.demo-line .lbl:last-child { transform: translateX(-85%); }

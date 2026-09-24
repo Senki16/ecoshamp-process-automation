@@ -129,11 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // stepper + line labels
   $('#dstep').innerHTML = STAGES.map((s, i) => `${i ? '<span class="arrow-sep" aria-hidden="true">→</span>' : ''}<button class="step" data-i="${i}"><span class="num ghost">${s.n}</span><span>${esc(s.name)}</span></button>`).join('');
   $('#dline').insertAdjacentHTML('beforeend',
-    STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${s.zone[0]}%;width:${s.zone[1] - s.zone[0]}%"></div>`).join('') +
-    STAGES.map((s, i) => `<button class="lbl" data-i="${i}" style="left:${(s.zone[0] + s.zone[1]) / 2}%"><span class="num">${s.n}</span>${esc(s.short)}</button>`).join(''));
+    STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${s.simZone[0]}%;width:${s.simZone[1] - s.simZone[0]}%"></div>`).join('') +
+    STAGES.map((s, i) => `<button class="lbl" data-i="${i}" style="left:${(s.simZone[0] + s.simZone[1]) / 2}%"><span class="num">${s.n}</span>${esc(s.short)}</button>`).join(''));
   $('#live-sel').innerHTML = $('#chart-stage').innerHTML = STAGES.map((s, i) => `<option value="${i}">Stage ${s.n} · ${esc(s.short)}</option>`).join('');
 
-  const belt = animateBelt($('#dline .belt'), { speed: () => sim.speed / 100, running: () => sim.running });
+  const belt = lineSim($('#dsim'), { speed: () => sim.speed / 100, running: () => sim.running });
 
   // controls
   const setBtns = () => {
