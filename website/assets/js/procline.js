@@ -52,12 +52,15 @@ function procLine(host, S, opts = {}) {
     const b = bg.getContext('2d');
     const r = (x, y, w, h, c) => { b.fillStyle = c; b.fillRect(x, y, w, h); };
     let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-    const sky = ['#0f3a5c', '#134566', '#185171', '#1d5e7c', '#236b86', '#2a7a90', '#32889a'];
-    const band = 13;
-    sky.forEach((c, i) => {
-      r(0, i * band, W, band, c);
-      if (i < sky.length - 1) for (let x = (i % 2); x < W; x += 2) r(x, i * band + band - 1, 1, 1, sky[i + 1]); // dither seam
-    });
+    // sky: the page's olive at the top, fading to the teal horizon, in dithered bands
+    const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const top = hex(opts.skyTop || getComputedStyle(document.documentElement).getPropertyValue('--section').trim() || '#1d5a6e'), hor = hex('#3f8a93');
+    const band = 6, y0 = TOP + 2, y1 = 112;
+    const col = y => { const k = Math.max(0, Math.min(1, (y - y0) / (y1 - y0))); return `rgb(${top.map((c, i) => Math.round(c + (hor[i] - c) * k)).join(',')})`; };
+    for (let y = 0; y < 125; y += band) {
+      r(0, y, W, band, col(y));
+      for (let x = (y / band) % 2; x < W; x += 2) r(x, y + band - 1, 1, 1, col(y + band));
+    }
     // far city
     for (let x = 0; x < W;) {
       const w = 8 + (rnd() * 16 | 0), h = 18 + (rnd() * 42 | 0);
@@ -89,7 +92,7 @@ function procLine(host, S, opts = {}) {
   const arm = { x: 512, y: 100 };
   let packs = [];          // packs moving to the tunnel / boxes
   let lastBottles = S.bottles, clock = 0, belt = 0, boxes = 0;
-  const clouds = [[40, 18, 1], [220, 30, .7], [410, 14, 1.2], [560, 36, .8]];
+  const clouds = [[40, 50, 1], [220, 60, .7], [410, 46, 1.2], [560, 64, .8]];
 
   // ---------- building blocks ----------
   function lamp(x, y, on, c) { R(x, y, 3, 3, C.out); R(x + 1, y + 1, 1, 1, on ? c : C.off); if (on) { P(x + 1, y, c); } }
