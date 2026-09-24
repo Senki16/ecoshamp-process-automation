@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
+<script src="assets/js/linesim.js"></script>
 </head>
 <body>
 <main>
@@ -36,10 +37,7 @@
         <li>A cleaner future</li>
       </ul>
     </div>
-    <div class="hero-line line-stage">
-      <img class="px" src="assets/img/line_full.webp" alt="The EcoShamp production line: storage tanks, mixer, homogenizer, filters, bottle filler, robotic labelling arm and packed boxes">
-      <div class="belt" style="top:72%"></div>
-    </div>
+    <div class="hero-line" id="line-sim" role="img" aria-label="Animated EcoShamp production line: storage tanks, mixer, homogenizer, filters, bottle filler, robotic labelling arm and packed boxes"></div>
   </section>
 
   <section class="features" aria-label="Key features">
@@ -100,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <header><span class="num">${s.n}</span><span>${esc(s.name)}</span></header>
       <div class="art">${spriteImgs(s.n === 1 ? ['tank_h2o', 'tank_leaf'] : s.n === 6 ? ['robot_arm'] : s.n === 7 ? ['final_bottle'] : s.sprites)}</div>
     </a>`).join('');
-  animateBelt($('.hero .belt'));
+  lineSim($('#line-sim'));
 });
 </script>
 </body>
