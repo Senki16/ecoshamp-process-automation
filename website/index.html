@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EcoShamp · Natural Shampoo</title>
+<meta name="description" content="EcoShamp: an automated nano-factory for natural, sustainable shampoo. Seven subprocesses, sensors, actuators and control — Universidad EAFIT.">
+<link rel="icon" href="assets/img/leaf_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+</head>
+<body>
+<main>
+  <section class="banner hero">
+    <div class="sky"></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <h3>From nature<br>to your hair</h3>
+        <p>An automated and sustainable production process for high-quality natural shampoo — a nano-factory of 12 × 2.3 × 2.3 m.</p>
+        <div class="btns">
+          <a class="btn primary" href="process.html">Explore the Process <span style="display:inline-flex;width:16px" data-svg="arrow"></span></a>
+          <a class="btn" href="demo.html">Watch Demo <span style="display:inline-flex;width:16px" data-svg="play"></span></a>
+        </div>
+      </div>
+      <div class="hero-title">
+        <div class="leafs"><img class="px" src="assets/img/f_leaf.png" alt=""><h1 class="title-xl">EcoShamp</h1><img class="px" src="assets/img/f_leaf.png" alt="" style="transform:scaleX(-1)"></div>
+        <div class="title-sub" style="margin-top:14px">Natural Shampoo</div>
+      </div>
+      <ul class="hero-tags">
+        <li>Sustainable ingredients</li>
+        <li>Automated process</li>
+        <li>A cleaner future</li>
+      </ul>
+    </div>
+    <div class="hero-line line-stage">
+      <img class="px" src="assets/img/line_full.webp" alt="The EcoShamp production line: storage tanks, mixer, homogenizer, filters, bottle filler, robotic labelling arm and packed boxes">
+      <div class="belt" style="top:72%"></div>
+    </div>
+  </section>
+
+  <section class="features" aria-label="Key features">
+    <div class="feature"><img class="px" src="assets/img/f_leaf.png" alt=""><h3>Sustainable ingredients</h3><p>Natural formulations, free of animal derivatives.</p></div>
+    <div class="feature"><img class="px" src="assets/img/f_gear.png" alt=""><h3>Automated process</h3><p>Automated from raw-material inbound to packed outbound.</p></div>
+    <div class="feature"><img class="px" src="assets/img/f_flask.png" alt=""><h3>High quality</h3><p>Sensors verify level, weight, temperature and pressure at every stage.</p></div>
+    <div class="feature"><img class="px" src="assets/img/f_recycle.png" alt=""><h3>Lower impact</h3><p>Precise dosing and inventory control keep waste to a minimum.</p></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><img class="px" src="assets/img/f_leaf.png" alt="">Production process<img class="px" src="assets/img/f_leaf.png" alt=""></h2>
+        <p>From raw materials to a natural, high-quality shampoo — seven subprocesses, one engineer each.</p>
+      </div>
+      <div class="stage-cards" id="stage-cards"></div>
+    </div>
+  </section>
+
+  <section class="section impact">
+    <div class="bg"></div>
+    <div class="wrap">
+      <img class="px" src="assets/img/bottle_group.png" alt="EcoShamp bottles">
+      <div>
+        <h2>A cleaner future</h2>
+        <p>EcoShamp produces personal-care products from natural and sustainable ingredients, using automated processes that minimise environmental impact — effective, ethical and respectful of the planet.</p>
+        <div class="pillars">
+          <div><img class="px" src="assets/img/f_leaf.png" alt="">Natural<br>ingredients</div>
+          <div><img class="px" src="assets/img/f_gear.png" alt="">Efficient<br>production</div>
+          <div><img class="px" src="assets/img/f_recycle.png" alt="">Sustainable<br>packaging</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><img class="px" src="assets/img/icons/s_presence.png" alt=""><div><b>2–3k</b><span>Units per day</span></div></div>
+          <div class="stat"><img class="px" src="assets/img/f_gear.png" alt=""><div><b>7</b><span>Process stages</span></div></div>
+          <div class="stat"><img class="px" src="assets/img/icons/s_level.png" alt=""><div><b>250 L</b><span>Mixing capacity</span></div></div>
+          <div class="stat"><img class="px" src="assets/img/icons/a_conveyor_motor.png" alt=""><div><b>12 m</b><span>Line length</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="bg"></div>
+    <div class="wrap">
+      <div>
+        <h2>Ready to see it in action?</h2>
+        <p class="muted">Run the interactive simulation of the production line.</p>
+      </div>
+      <a class="btn primary" href="demo.html">Go to Demo <span style="display:inline-flex;width:16px" data-svg="play"></span></a>
+    </div>
+  </section>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  $$('[data-svg]').forEach(el => el.innerHTML = SVG[el.dataset.svg]);
+  $('#stage-cards').innerHTML = STAGES.map(s => `
+    <a class="stage-card" href="process.html#${s.id}">
+      <header><span class="num">${s.n}</span><span>${esc(s.name)}</span></header>
+      <div class="art">${spriteImgs(s.n === 1 ? ['tank_h2o', 'tank_leaf'] : s.n === 6 ? ['robot_arm'] : s.n === 7 ? ['final_bottle'] : s.sprites)}</div>
+    </a>`).join('');
+  animateBelt($('.hero .belt'));
+});
+</script>
+</body>
+</html>

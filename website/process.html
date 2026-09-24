@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Production Process · EcoShamp</title>
+<meta name="description" content="The seven subprocesses of the EcoShamp production line, with inputs, flow, sensors and actuators.">
+<link rel="icon" href="assets/img/leaf_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+</head>
+<body>
+<main>
+  <section class="banner">
+    <div class="sky"></div>
+    <div class="wrap" style="text-align:center;padding-top:30px">
+      <div class="leafs"><img class="px" src="assets/img/f_leaf.png" alt=""><h1 class="title-xl" style="font-size:clamp(28px,5.5vw,60px)">Production Process</h1><img class="px" src="assets/img/f_leaf.png" alt="" style="transform:scaleX(-1)"></div>
+      <p style="font-size:18px;margin-top:12px">From raw materials to a natural and high-quality shampoo.</p>
+    </div>
+    <div class="line-stage" style="margin-top:14px">
+      <img class="px" src="assets/img/line_full.webp" alt="The complete EcoShamp production line" style="width:100%">
+      <div class="belt" style="top:72%"></div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-top:18px;padding-bottom:40px">
+    <nav class="stepper" id="stepper" aria-label="Process stages"></nav>
+    <article class="stage-detail" id="detail" aria-live="polite"></article>
+    <div class="pager">
+      <button class="btn" id="prev">Previous</button>
+      <div class="dots" id="dots"></div>
+      <button class="btn primary" id="next">Next</button>
+      <div class="panel dims">
+        <img class="px" src="assets/img/icons/a_conveyor_motor.png" alt="">
+        <div><b style="font-size:14px">Total line dimensions</b><div class="muted small">12 m × 2.3 m × 2.3 m · 2,000–3,000 units/day</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let cur = 0;
+  $('#prev').innerHTML = SVG.back + ' Previous';
+  $('#next').innerHTML = 'Next ' + SVG.next;
+  $('#stepper').innerHTML = STAGES.map((s, i) => `
+    <button class="step" data-i="${i}"><span class="num">${s.n}</span><img class="px" src="${s.icon}" alt=""><span>${esc(s.name)}</span></button>`).join('');
+  $('#dots').innerHTML = STAGES.map((s, i) => (i ? '<i></i>' : '') + `<button data-i="${i}" aria-label="Stage ${s.n}">${s.n}</button>`).join('');
+
+  const kit = list => `<div class="kit">${list.map(([ic, name, d]) => `<div><img class="px" src="${ICON}${ic}.png" alt="">${esc(name)}${d ? `<small>${esc(d)}</small>` : ''}</div>`).join('')}</div>`;
+
+  function mefTable() {
+    return `<div class="panel sd-col mef" style="grid-column:1/-1">
+      <div class="panel-h">Control — upper machine state machine (ESP32)</div>
+      <p class="muted small" style="margin-top:6px">Generated from the state-machine designer; the three-bottle version counts <code>C</code> and returns to <code>Start</code> once <code>C ≥ 3</code>. <a href="${REPO}/tree/main/04_State_Machines" target="_blank" rel="noopener">See the code</a>.</p>
+      <div style="overflow-x:auto;margin-top:8px"><table>
+        <thead><tr><th>State</th><th>Meaning</th><th>Outputs asserted</th></tr></thead>
+        <tbody>${MEF.map(m => `<tr><td><code>${m.id}</code></td><td>${esc(m.meaning)}</td><td>${m.out.map(o => `<code>${o}</code>`).join(' ') || '—'}</td></tr>`).join('')}</tbody>
+      </table></div>
+      <p class="muted small" style="margin-top:10px">Inputs: ${MEF_INPUTS.map(([n, p]) => `<code>${n}</code>→${p}`).join(' ')} · Outputs: ${MEF_OUTPUTS.map(([n, p]) => `<code>${n}</code>→${p}`).join(' ')}</p>
+    </div>`;
+  }
+
+  function show(i, push = true) {
+    cur = (i + STAGES.length) % STAGES.length;
+    const s = STAGES[cur];
+    $$('#stepper .step').forEach((b, j) => b.classList.toggle('active', j === cur));
+    $$('#dots button').forEach((b, j) => b.classList.toggle('active', j === cur));
+    $('#detail').innerHTML = `
+      <div class="panel sd-head">
+        <span class="num lg">${s.n}</span>
+        <div><h2>${esc(s.name)}</h2><div class="muted">${esc(s.summary)}</div><div class="owner">Engineer in charge: ${esc(s.owner)}</div></div>
+        <p>${esc(s.desc)}</p>
+      </div>
+      <div class="sd-body">
+        <div class="panel sd-col">
+          <div class="panel-h">Inputs</div>
+          <ul class="inputs">${s.inputs.map(([ic, b, t]) => `<li><span class="ico"><img class="px" src="${ICON}${ic}.png" alt=""></span><div><b>${esc(b)}</b><span>${esc(t)}</span></div></li>`).join('')}</ul>
+        </div>
+        <div class="sd-mid">
+          <div class="scene">${spriteImgs(s.sprites)}</div>
+          <div class="panel-h" style="margin-top:16px">Subprocess flow</div>
+          <div class="flow">${s.flow.map(([h, p], k) => `<div class="flow-step"><h4><span class="num">${k + 1}</span>${esc(h)}</h4><p>${esc(p)}</p></div>`).join('')}</div>
+        </div>
+        <div class="panel sd-col">
+          <div class="panel-h">Key sensors</div>
+          ${kit(s.sensors)}
+          <div class="panel-h" style="margin-top:16px">Key actuators</div>
+          ${kit(s.actuators)}
+          <div class="panel-h" style="margin-top:16px">Technical notes</div>
+          <ul class="notes">${s.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
+        </div>
+        ${s.n === 6 ? mefTable() : ''}
+      </div>`;
+    $('#prev').disabled = false;
+    if (push) history.replaceState(null, '', '#' + s.id);
+  }
+
+  $('#stepper').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) show(+b.dataset.i); });
+  $('#dots').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) show(+b.dataset.i); });
+  $('#prev').onclick = () => { show(cur - 1); $('#stepper').scrollIntoView({ block: 'nearest' }); };
+  $('#next').onclick = () => { show(cur + 1); $('#stepper').scrollIntoView({ block: 'nearest' }); };
+  const fromHash = STAGES.findIndex(s => '#' + s.id === location.hash);
+  show(fromHash >= 0 ? fromHash : 0, false);
+  animateBelt($('.belt'));
+});
+</script>
+</body>
+</html>
