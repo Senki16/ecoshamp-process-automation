@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About the Project · EcoShamp</title>
+<meta name="description" content="About EcoShamp: objective, team, technologies and documents of the process-automation project at Universidad EAFIT.">
+<link rel="icon" href="assets/img/leaf_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .about-hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 24px; align-items: center; padding-top: 30px; padding-bottom: 20px; }
+  .about-hero .intro { border-left: 3px solid var(--green); padding-left: 16px; margin-top: 22px; font-size: 16px; }
+  .about-hero .art { border-radius: 8px; overflow: hidden; border: 1px solid var(--line-strong); background: url(assets/img/landscape.webp) center 20% / cover; padding-top: 40px; }
+  .about-hero .art img { width: 100%; }
+  .obj { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+  .obj .panel { padding: 20px; }
+  .obj h2, .blk h2 { font-family: var(--display); font-size: 20px; letter-spacing: 1px; text-transform: uppercase; display: flex; gap: 12px; align-items: center; }
+  .obj h2 img, .blk h2 img { width: 34px; height: 34px; object-fit: contain; }
+  .obj-in { display: grid; grid-template-columns: 1fr 230px; gap: 18px; align-items: center; margin-top: 12px; }
+  .checks { list-style: none; margin: 0; padding: 14px; border: 1px solid var(--line-strong); border-radius: 6px; display: grid; gap: 10px; font-size: 14px; }
+  .checks li { display: flex; gap: 10px; align-items: center; }
+  .checks li::before { content: "✓"; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 4px; background: var(--green); color: var(--green-ink); font-weight: 800; font-size: 13px; flex: none; }
+  .blk { padding: 20px; margin-top: 16px; }
+  .blk-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .team6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .card { text-align: center; background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 6px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .card.me { border-color: var(--green); }
+  .card .av { width: 58px; height: 58px; border-radius: 8px; display: grid; place-items: center; font: 700 20px var(--display); color: var(--green-ink); background: var(--green); box-shadow: 0 3px 0 var(--green-deep); image-rendering: pixelated; }
+  .card b { font-size: 14px; }
+  .card .role { font-size: 12px; font-weight: 700; background: var(--green); color: var(--green-ink); border-radius: 4px; padding: 4px 8px; margin-top: auto; }
+  .card .n { font-size: 12px; color: var(--text-2); }
+  .tech-sdg { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+  .tech { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 8px; }
+  .tech div { background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 12px 6px; text-align: center; font-size: 13px; font-weight: 600; }
+  .tech img { width: 40px; height: 36px; object-fit: contain; margin: 0 auto 6px; }
+  .tech small { display: block; color: var(--text-2); font-weight: 400; font-size: 11.5px; }
+  .sdgs { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sdg { width: 120px; min-height: 110px; border-radius: 4px; padding: 10px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+  .sdg b { font: 700 30px/1 var(--display); }
+  .sdg span { font-size: 11px; font-weight: 800; text-transform: uppercase; line-height: 1.2; }
+  .sdg p { font-size: 11px; opacity: .9; margin-top: 6px; }
+  .mv { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .mv .panel { padding: 20px; }
+  .mv h3 { font-family: var(--display); font-size: 16px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  @media (max-width: 1100px) { .team6 { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 820px) {
+    .about-hero .wrap, .obj, .obj-in, .tech-sdg, .mv { grid-template-columns: 1fr; }
+    .team6 { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+</head>
+<body>
+<main>
+  <section class="banner about-hero">
+    <div class="wrap">
+      <div>
+        <h1 class="title-xl" style="font-size:clamp(40px,7vw,80px)">About</h1>
+        <div class="leafs" style="margin-top:12px"><img class="px" src="assets/img/f_leaf.png" alt=""><span class="title-sub">The project</span><img class="px" src="assets/img/f_leaf.png" alt="" style="transform:scaleX(-1)"></div>
+        <p class="intro">EcoShamp is a university project on the design and automation of a small-scale production line for natural shampoo — integrating sustainability, efficiency and modern control systems. It was developed for CAP (Control Automático de Procesos) at Universidad EAFIT.</p>
+      </div>
+      <div class="art"><img class="px" src="assets/img/line_full.webp" alt="The EcoShamp production line"></div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-top:20px;padding-bottom:40px">
+    <section class="panel features">
+      <div class="feature"><img class="px" src="assets/img/f_leaf.png" alt=""><h3>Sustainability</h3><p>Natural ingredients, free of animal derivatives.</p></div>
+      <div class="feature"><img class="px" src="assets/img/f_gear.png" alt=""><h3>Automation</h3><p>Every stage run by sensors, actuators and controllers.</p></div>
+      <div class="feature"><img class="px" src="assets/img/f_flask.png" alt=""><h3>Education</h3><p>A hands-on project applying process-control theory.</p></div>
+      <div class="feature"><img class="px" src="assets/img/f_recycle.png" alt=""><h3>Real impact</h3><p>Efficient production with a smaller environmental footprint.</p></div>
+    </section>
+
+    <div class="obj" style="margin-top:16px">
+      <section class="panel">
+        <h2><img class="px" src="assets/img/icons/s_orientation.png" alt="">Project objective</h2>
+        <div class="obj-in">
+          <p>Design an automated and sustainable production line for natural shampoo, integrating sensors, actuators and control systems into an efficient, safe and environmentally friendly process — with 2,000–3,000 units per day in a 12 × 2.3 × 2.3 m plant.</p>
+          <ul class="checks"><li>Sustainable ingredients</li><li>Automated and efficient process</li><li>High-quality final product</li></ul>
+        </div>
+      </section>
+      <section class="panel">
+        <h2><img class="px" src="assets/img/f_leaf.png" alt="">Impact</h2>
+        <p style="margin-top:12px">EcoShamp is aimed at people aged 18–45 who value sustainability and natural products, and shows how automation and engineering can contribute to responsible consumption and a cleaner future.</p>
+      </section>
+    </div>
+
+    <div class="mv">
+      <section class="panel"><h3>Mission</h3><p>Produce high-quality personal-care products based on natural, sustainable ingredients, using automated processes that minimise environmental impact — effective, ethical and respectful of the environment.</p></section>
+      <section class="panel"><h3>Vision</h3><p>Be leaders in sustainable and natural personal-care products, standing out for innovation in automated processes and commitment to the wellbeing of customers and the planet.</p></section>
+    </div>
+
+    <section class="panel blk">
+      <div class="blk-head">
+        <h2><img class="px" src="assets/img/icons/a_robotic_arm.png" alt="">Our team</h2>
+        <span class="muted small">A collaborative project at <b style="color:var(--text)">Universidad EAFIT</b> — one engineer per subprocess</span>
+      </div>
+      <div class="team6" id="team"></div>
+    </section>
+
+    <div class="tech-sdg">
+      <section class="panel blk">
+        <h2><img class="px" src="assets/img/f_gear.png" alt="">Technologies used</h2>
+        <div class="tech" style="margin-top:14px">
+          <div><img class="px" src="assets/img/icons/a_onoff_switch.png" alt="">ESP32<small>Controller</small></div>
+          <div><img class="px" src="assets/img/icons/s_conductivity.png" alt="">State machines<small>Designer → XML</small></div>
+          <div><img class="px" src="assets/img/icons/a_labeling_machine.png" alt="">JavaScript<small>Generated control code</small></div>
+          <div><img class="px" src="assets/img/icons/s_pressure.png" alt="">Python<small>SymPy · control</small></div>
+          <div><img class="px" src="assets/img/icons/s_flow.png" alt="">Jupyter<small>Continuous control</small></div>
+          <div><img class="px" src="assets/img/icons/s_optical.png" alt="">Sensors<small>Level, weight, pressure…</small></div>
+        </div>
+      </section>
+      <section class="panel blk">
+        <h2><img class="px" src="assets/img/f_recycle.png" alt="">Sustainable goals</h2>
+        <div class="sdgs" style="margin-top:14px">
+          <div class="sdg" style="background:#bf8b2e"><b>12</b><div><span>Responsible consumption &amp; production</span></div></div>
+          <div class="sdg" style="background:#3f7e44"><b>13</b><div><span>Climate action</span></div></div>
+          <div class="sdg" style="background:#0a97d9"><b>6</b><div><span>Clean water</span></div></div>
+        </div>
+        <p class="muted small" style="margin-top:10px">UN Sustainable Development Goals the project's approach relates to.</p>
+      </section>
+    </div>
+
+    <section class="panel blk" id="contact">
+      <h2><img class="px" src="assets/img/icons/a_labeling_machine.png" alt="">Documents, videos &amp; contact</h2>
+      <div class="docs" style="margin-top:14px" id="docs"></div>
+    </section>
+  </div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  $('#team').innerHTML = TEAM.map(([name, role, n]) => {
+    const ini = name.split(' ').filter(w => /^[A-ZÁÉÍÓÚ]/.test(w)).slice(0, 2).map(w => w[0]).join('');
+    return `<div class="card ${n === 6 ? 'me' : ''}"><div class="av">${ini}</div><b>${esc(name)}</b><span class="n">Stage ${n}</span><span class="role">${esc(role)}</span></div>`;
+  }).join('');
+  const D = [
+    ['video', 'Project video', 'YouTube · Spanish', 'https://youtu.be/ZryVBzmH6Tc'],
+    ['video', 'Subprocess evidence', 'Bottle filling and labelling · Spanish', 'https://youtu.be/DVAGxc75j4o'],
+    ['doc', 'Process report', 'By subprocess · English (PDF)', `${REPO}/blob/main/02_Process_Report/EcoShamp_Process_Report_EN.pdf`],
+    ['doc', 'Company report', 'Company and process · Spanish (PDF)', `${REPO}/blob/main/01_Company_Report/EcoShamp_Company_Report_ES.pdf`],
+    ['doc', 'Poster', '70 × 100 cm (PDF)', `${REPO}/blob/main/03_Poster/EcoShamp_Poster_70x100.pdf`],
+    ['code', 'State machines', 'Controller code and diagrams', `${REPO}/tree/main/04_State_Machines`],
+    ['github', 'GitHub repository', 'Senki16/ecoshamp-process-automation', REPO],
+    ['mail', 'Contact', 'dzuluagah@eafit.edu.co', 'mailto:dzuluagah@eafit.edu.co'],
+  ];
+  $('#docs').innerHTML = D.map(([ic, b, s, h]) => `<a class="doc" href="${h}" ${h.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}><span class="ic">${SVG[ic]}</span><span><b>${esc(b)}</b><span>${esc(s)}</span></span></a>`).join('');
+});
+</script>
+</body>
+</html>

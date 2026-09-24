@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Components · EcoShamp</title>
+<meta name="description" content="Sensors, actuators and control elements used along the EcoShamp production line.">
+<link rel="icon" href="assets/img/leaf_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+</head>
+<body>
+<main>
+  <section class="banner page-banner comp-hero">
+    <div class="sky"></div>
+    <div class="wrap">
+      <div>
+        <h1 class="title-xl" style="font-size:clamp(30px,5.5vw,62px)">Components</h1>
+        <div class="title-sub" style="font-size:clamp(13px,1.8vw,20px);margin-top:10px">Sensors, actuators and control systems</div>
+        <p class="lead">The main components of the EcoShamp line, by stage. Click a stage on the line to filter, or open a component for its details.</p>
+      </div>
+      <div class="values">
+        <div><img class="px" src="assets/img/f_leaf.png" alt=""><b>Real components</b><span>Chosen for feasibility and availability</span></div>
+        <div><img class="px" src="assets/img/icons/s_filter_integrity.png" alt=""><b>Reliable operation</b><span>Every stage monitored by sensors</span></div>
+        <div><img class="px" src="assets/img/f_gear.png" alt=""><b>Automated control</b><span>State machines on an ESP32</span></div>
+        <div><img class="px" src="assets/img/f_recycle.png" alt=""><b>Sustainable</b><span>Precise dosing, less waste</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="toolbar" id="types" role="tablist" aria-label="Component type"></div>
+  </div>
+  <div class="line-hotspots" id="hotspots">
+    <img class="px" src="assets/img/line_full.webp" alt="Production line — click a stage to filter components" style="width:100%">
+  </div>
+
+  <div class="wrap" style="padding-bottom:40px">
+    <div class="comp-layout">
+      <aside class="panel filters">
+        <div class="panel-h">Filter components</div>
+        <label class="h" for="stage">Stage</label>
+        <select id="stage"><option value="">All stages</option></select>
+        <span class="h" style="display:block;font-weight:700;font-size:14px;margin:14px 0 6px">Type</span>
+        <label class="check"><input type="checkbox" value="sensor" checked> Sensors</label>
+        <label class="check"><input type="checkbox" value="actuator" checked> Actuators</label>
+        <label class="check"><input type="checkbox" value="control" checked> Control system</label>
+        <label class="h" for="sort">Sort by</label>
+        <select id="sort"><option value="stage">Stage order</option><option value="name">Name</option><option value="type">Type</option></select>
+        <button class="btn primary" id="reset" type="button">Reset filters</button>
+      </aside>
+      <section>
+        <div class="comp-head">
+          <h2>Components <span id="count"></span></h2>
+          <div class="search"><span data-svg="search"></span><input id="q" type="search" placeholder="Search component…" aria-label="Search component"></div>
+        </div>
+        <div class="comp-grid" id="grid"></div>
+      </section>
+    </div>
+  </div>
+
+  <dialog id="dlg"><div class="d-in" id="dlg-in"></div></dialog>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  $$('[data-svg]').forEach(el => el.innerHTML = SVG[el.dataset.svg]);
+  const ALL = buildComponents();
+  const TYPES = [['', 'All components', 'f_gear.png'], ['sensor', 'Sensors', 'icons/s_optical.png'], ['actuator', 'Actuators', 'icons/a_conveyor_motor.png'], ['control', 'Control system', 'icons/a_onoff_switch.png']];
+  const LABEL = { sensor: 'Sensor', actuator: 'Actuator', control: 'Control' };
+  const st = { type: '', stage: '', q: '', checks: new Set(['sensor', 'actuator', 'control']), sort: 'stage' };
+
+  $('#types').innerHTML = TYPES.map(([v, l, ic]) => `<button class="tab" role="tab" data-v="${v}"><img class="px" src="${IMG}${ic}" alt="">${l}</button>`).join('');
+  $('#stage').innerHTML += STAGES.map(s => `<option value="${s.n}">${s.n} · ${esc(s.name)}</option>`).join('');
+  $('#hotspots').insertAdjacentHTML('beforeend', STAGES.map(s => `<button class="hotspot" data-n="${s.n}" style="left:${s.zone[0]}%;width:${s.zone[1] - s.zone[0]}%" aria-label="Filter by ${esc(s.name)}"><span class="num">${s.n}</span></button>`).join(''));
+
+  function render() {
+    $$('#types .tab').forEach(b => b.classList.toggle('active', b.dataset.v === st.type));
+    $$('#hotspots .hotspot').forEach(b => b.classList.toggle('active', b.dataset.n === st.stage));
+    $('#stage').value = st.stage;
+    const q = st.q.toLowerCase();
+    let list = ALL.filter(c =>
+      (!st.type || c.type === st.type) && st.checks.has(c.type) &&
+      (!st.stage || c.stages.includes(+st.stage)) &&
+      (!q || (c.name + ' ' + c.note).toLowerCase().includes(q)));
+    const cmp = { stage: (a, b) => a.stages[0] - b.stages[0] || a.name.localeCompare(b.name), name: (a, b) => a.name.localeCompare(b.name), type: (a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name) };
+    list.sort(cmp[st.sort]);
+    $('#count').textContent = `(${list.length})`;
+    $('#grid').innerHTML = list.length ? list.map(c => `
+      <div class="comp">
+        <div class="top"><span class="chip ${c.type}">${LABEL[c.type]}</span><img class="px" src="${ICON}${c.icon}.png" alt=""></div>
+        <h3>${esc(c.name)}</h3>
+        <p>${esc(c.note)}</p>
+        <div class="foot"><span class="stages">Stage ${c.stages.join(', ')}</span><button data-k="${ALL.indexOf(c)}">View details →</button></div>
+      </div>`).join('') : '<div class="empty">No components match these filters.</div>';
+  }
+
+  $('#types').onclick = e => { const b = e.target.closest('.tab'); if (b) { st.type = b.dataset.v; render(); } };
+  $('#hotspots').onclick = e => { const b = e.target.closest('.hotspot'); if (b) { st.stage = st.stage === b.dataset.n ? '' : b.dataset.n; render(); } };
+  $('#stage').onchange = e => { st.stage = e.target.value; render(); };
+  $('#sort').onchange = e => { st.sort = e.target.value; render(); };
+  $('#q').oninput = e => { st.q = e.target.value; render(); };
+  $$('.filters input[type=checkbox]').forEach(cb => cb.onchange = () => { cb.checked ? st.checks.add(cb.value) : st.checks.delete(cb.value); render(); });
+  $('#reset').onclick = () => {
+    Object.assign(st, { type: '', stage: '', q: '', sort: 'stage' });
+    st.checks = new Set(['sensor', 'actuator', 'control']);
+    $$('.filters input[type=checkbox]').forEach(cb => cb.checked = true);
+    $('#q').value = ''; $('#sort').value = 'stage'; render();
+  };
+  $('#grid').onclick = e => {
+    const b = e.target.closest('button[data-k]'); if (!b) return;
+    const c = ALL[+b.dataset.k];
+    $('#dlg-in').innerHTML = `
+      <button class="close" aria-label="Close">×</button>
+      <div class="d-top"><img class="px" src="${ICON}${c.icon}.png" alt=""><div><span class="chip ${c.type}">${LABEL[c.type]}</span><h3 style="margin-top:6px">${esc(c.name)}</h3></div></div>
+      <p>${esc(c.note)}</p>
+      <p><b style="color:var(--text)">Used in:</b> ${c.stages.map(n => `<a href="process.html#${STAGES[n - 1].id}">${n} · ${esc(STAGES[n - 1].name)}</a>`).join(', ')}</p>`;
+    $('#dlg').showModal();
+    $('#dlg .close').onclick = () => $('#dlg').close();
+  };
+  $('#dlg').addEventListener('click', e => { if (e.target.id === 'dlg') e.target.close(); });
+  render();
+});
+</script>
+</body>
+</html>

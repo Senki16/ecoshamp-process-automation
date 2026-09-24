@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive Demo · EcoShamp</title>
+<meta name="description" content="Run a simulation of the EcoShamp production line and watch the labeling & packaging state machine cycle.">
+<link rel="icon" href="assets/img/leaf_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  #dstep { display: flex; align-items: center; gap: 6px; padding: 10px; overflow-x: auto; }
+  #dstep .step { flex: 1 1 0; min-width: 140px; background: transparent; border-color: transparent; }
+  #dstep .step.active { border-color: var(--green); }
+  #dstep .arrow-sep { color: var(--teal); flex: none; }
+  #dstep .step.active .num.ghost { background: var(--green); color: var(--green-ink); border-color: var(--green); }
+</style>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/demo.js"></script>
+</head>
+<body>
+<main>
+  <section class="banner page-banner">
+    <div class="sky"></div>
+    <div class="wrap">
+      <div style="text-align:center">
+        <div class="leafs"><img class="px" src="assets/img/f_leaf.png" alt=""><h1 class="title-xl" style="font-size:clamp(28px,5.5vw,60px)">Interactive Demo</h1><img class="px" src="assets/img/f_leaf.png" alt="" style="transform:scaleX(-1)"></div>
+        <p class="lead">Explore the production line and see how each stage works.</p>
+      </div>
+      <aside>Click a stage to see its details, sensors, actuators and live data. Start, pause or change the parameters to simulate the process. Readings are simulated; the labeling &amp; packaging controller follows the real state sequence of the project's ESP32 code.</aside>
+    </div>
+    <div class="wrap" style="display:block;padding-top:0"><nav class="panel" id="dstep" aria-label="Stages"></nav></div>
+    <div class="demo-line" id="dline">
+      <img class="line px" src="assets/img/line_full.webp" alt="Production line">
+      <div class="belt" style="position:absolute;left:0;right:0;top:72%"></div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-bottom:40px">
+    <div class="demo-grid">
+      <section class="panel">
+        <div class="head-row"><h2 class="panel-h">Simulation control</h2><span class="sim-state" id="sim-state"></span></div>
+        <p class="muted small">Run, pause or reset the production line.</p>
+        <div class="ctl-btns">
+          <button class="btn primary" id="start"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>Start</button>
+          <button class="btn" id="pause"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>Pause</button>
+          <button class="btn" id="reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v5h5"/></svg>Reset</button>
+        </div>
+      </section>
+      <section class="panel">
+        <h2 class="panel-h">Production parameters</h2>
+        <div class="param"><label for="p-speed">Production speed</label><input id="p-speed" name="speed" type="range" min="20" max="100" value="80" data-u="%"><output for="p-speed"></output></div>
+        <div class="param"><label for="p-fill">Filling volume</label><input id="p-fill" name="fill" type="range" min="200" max="500" step="10" value="400" data-u="ml"><output for="p-fill"></output></div>
+        <div class="param"><label for="p-rpm">Mixer speed</label><input id="p-rpm" name="rpm" type="range" min="60" max="200" step="5" value="120" data-u="rpm"><output for="p-rpm"></output></div>
+      </section>
+      <section class="panel">
+        <h2 class="panel-h">Real-time data</h2>
+        <div class="kpis">
+          <div class="kpi"><img class="px" src="assets/img/icons/s_presence.png" alt=""><div><b id="k-bottles">0</b><span>Bottles packed</span></div></div>
+          <div class="kpi"><img class="px" src="assets/img/icons/a_labeling_machine.png" alt=""><div><b id="k-packs">0</b><span>Packs of 3</span></div></div>
+          <div class="kpi"><img class="px" src="assets/img/icons/s_level.png" alt=""><div><b id="k-litres">0</b><span>Litres dispensed</span></div></div>
+          <div class="kpi"><img class="px" src="assets/img/icons/s_orientation.png" alt=""><div><b id="k-time">0:00</b><span>Simulated time</span></div></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="demo-grid-2">
+      <section class="panel">
+        <h2 class="panel-h">Stage information</h2>
+        <div id="info"></div>
+      </section>
+      <section class="panel">
+        <div class="tabs" role="tablist">
+          <button class="active" data-t="flow">Process flow</button>
+          <button data-t="io">Sensors &amp; actuators</button>
+          <button data-t="chart">Real-time graph</button>
+        </div>
+        <div class="tab-body">
+          <div id="tab-dyn"></div>
+          <div id="chart-box" hidden>
+            <div class="chart-sel">
+              <select id="chart-stage" aria-label="Stage"></select>
+              <select id="chart-metric" aria-label="Measurement"></select>
+            </div>
+            <div class="chart-wrap"><canvas id="chart" aria-label="Line chart of the selected measurement over time"></canvas><div class="chart-tip" id="chart-tip"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="head-row"><h2 class="panel-h">Live sensor data</h2><select class="mini-sel" id="live-sel" aria-label="Stage"></select></div>
+        <div class="live" id="live"></div>
+        <div class="mef-live">
+          <div class="head-row" style="margin-top:14px"><h2 class="panel-h">Stage 6 controller</h2><span class="small muted">C = <b id="mef-c" style="color:var(--text)">0</b> / 3</span></div>
+          <p class="small muted" style="margin-top:4px">Three-bottle state machine — <span id="mef-meaning"></span></p>
+          <div class="mef-states" id="mef-states"></div>
+          <div class="lamps" id="mef-out"></div>
+        </div>
+        <p class="sim-note">Simulated values for illustration, time-scaled by the production speed.</p>
+      </section>
+    </div>
+  </div>
+</main>
+</body>
+</html>
