@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/linesim.js"></script>
+<script src="assets/js/procline.js"></script>
+<script src="assets/js/sim.js"></script>
 </head>
 <body>
 <main>
@@ -98,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <header><span class="num">${s.n}</span><span>${esc(s.name)}</span></header>
       <div class="art">${spriteImgs(s.n === 1 ? ['tank_h2o', 'tank_leaf'] : s.n === 6 ? ['robot_arm'] : s.n === 7 ? ['final_bottle'] : s.sprites)}</div>
     </a>`).join('');
-  lineSim($('#line-sim'));
+  autoLine($('#line-sim'));
 });
 </script>
 </body>

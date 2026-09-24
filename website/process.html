@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/linesim.js"></script>
+<script src="assets/js/procline.js"></script>
+<script src="assets/js/sim.js"></script>
 </head>
 <body>
 <main>
@@ -44,8 +45,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   let cur = 0;
-  lineSim($('#psim'));
-  $('#pline').insertAdjacentHTML('beforeend', STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${s.simZone[0]}%;width:${s.simZone[1] - s.simZone[0]}%"></div>`).join(''));
+  autoLine($('#psim'));
+  $('#pline').insertAdjacentHTML('beforeend', STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${PROC_ZONES[i][0]}%;width:${PROC_ZONES[i][1] - PROC_ZONES[i][0]}%"></div>`).join(''));
   $('#prev').innerHTML = SVG.back + ' Previous';
   $('#next').innerHTML = 'Next ' + SVG.next;
   $('#stepper').innerHTML = STAGES.map((s, i) => `
