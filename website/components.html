@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
+<script src="assets/js/linesim.js"></script>
 </head>
 <body>
 <main>
@@ -36,7 +37,7 @@
     <div class="toolbar" id="types" role="tablist" aria-label="Component type"></div>
   </div>
   <div class="line-hotspots" id="hotspots">
-    <img class="px" src="assets/img/line_full.webp" alt="Production line — click a stage to filter components" style="width:100%">
+    <div id="csim" role="img" aria-label="Animated production line — click a stage to filter components"></div>
   </div>
 
   <div class="wrap" style="padding-bottom:40px">
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $('#types').innerHTML = TYPES.map(([v, l, ic]) => `<button class="tab" role="tab" data-v="${v}"><img class="px" src="${IMG}${ic}" alt="">${l}</button>`).join('');
   $('#stage').innerHTML += STAGES.map(s => `<option value="${s.n}">${s.n} · ${esc(s.name)}</option>`).join('');
-  $('#hotspots').insertAdjacentHTML('beforeend', STAGES.map(s => `<button class="hotspot" data-n="${s.n}" style="left:${s.zone[0]}%;width:${s.zone[1] - s.zone[0]}%" aria-label="Filter by ${esc(s.name)}"><span class="num">${s.n}</span></button>`).join(''));
+  $('#hotspots').insertAdjacentHTML('beforeend', STAGES.map(s => `<button class="hotspot" data-n="${s.n}" style="left:${s.simZone[0]}%;width:${s.simZone[1] - s.simZone[0]}%" aria-label="Filter by ${esc(s.name)}"><span class="num">${s.n}</span></button>`).join(''));
 
   function render() {
     $$('#types .tab').forEach(b => b.classList.toggle('active', b.dataset.v === st.type));
@@ -122,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#dlg .close').onclick = () => $('#dlg').close();
   };
   $('#dlg').addEventListener('click', e => { if (e.target.id === 'dlg') e.target.close(); });
+  lineSim($('#csim'));
   render();
 });
 </script>

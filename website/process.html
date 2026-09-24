@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/data.js"></script>
 <script src="assets/js/common.js"></script>
+<script src="assets/js/linesim.js"></script>
 </head>
 <body>
 <main>
@@ -21,9 +22,8 @@
       <div class="leafs"><img class="px" src="assets/img/f_leaf.png" alt=""><h1 class="title-xl" style="font-size:clamp(28px,5.5vw,60px)">Production Process</h1><img class="px" src="assets/img/f_leaf.png" alt="" style="transform:scaleX(-1)"></div>
       <p style="font-size:18px;margin-top:12px">From raw materials to a natural and high-quality shampoo.</p>
     </div>
-    <div class="line-stage" style="margin-top:14px">
-      <img class="px" src="assets/img/line_full.webp" alt="The complete EcoShamp production line" style="width:100%">
-      <div class="belt" style="top:72%"></div>
+    <div class="demo-line" id="pline" style="margin-top:14px">
+      <div id="psim" role="img" aria-label="Animated EcoShamp production line"></div>
     </div>
   </section>
 
@@ -44,6 +44,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   let cur = 0;
+  lineSim($('#psim'));
+  $('#pline').insertAdjacentHTML('beforeend', STAGES.map((s, i) => `<div class="zone" data-i="${i}" style="left:${s.simZone[0]}%;width:${s.simZone[1] - s.simZone[0]}%"></div>`).join(''));
   $('#prev').innerHTML = SVG.back + ' Previous';
   $('#next').innerHTML = 'Next ' + SVG.next;
   $('#stepper').innerHTML = STAGES.map((s, i) => `
@@ -69,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const s = STAGES[cur];
     $$('#stepper .step').forEach((b, j) => b.classList.toggle('active', j === cur));
     $$('#dots button').forEach((b, j) => b.classList.toggle('active', j === cur));
+    $$('#pline .zone').forEach((z, j) => z.classList.toggle('active', j === cur));
     $('#detail').innerHTML = `
       <div class="panel sd-head">
         <span class="num lg">${s.n}</span>
@@ -105,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#next').onclick = () => { show(cur + 1); $('#stepper').scrollIntoView({ block: 'nearest' }); };
   const fromHash = STAGES.findIndex(s => '#' + s.id === location.hash);
   show(fromHash >= 0 ? fromHash : 0, false);
-  animateBelt($('.belt'));
+
 });
 </script>
 </body>
