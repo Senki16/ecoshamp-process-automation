@@ -19,14 +19,7 @@ designed for **2,000–3,000 units per day**.
 
 ### 🌐 Website
 
-An interactive website for the project lives in [`website/`](website): home, the seven
-subprocesses, a filterable component catalogue, an **interactive demo** of the line (the
-labeling & packaging controller follows the real state sequence of the ESP32 code) and an
-about page. It is plain HTML/CSS/JS with no build step.
-
-- **Run locally:** `cd website && python3 -m http.server 8000`, then open http://localhost:8000
-- **Deploy on Vercel:** import this repository; [`vercel.json`](vercel.json) serves the
-  `website/` folder, so no settings need to be changed.
+**[ecoshamp-process-automation.vercel.app](https://ecoshamp-process-automation.vercel.app/)**
 
 ---
 
