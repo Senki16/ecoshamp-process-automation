@@ -69,25 +69,38 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#tab-dyn').hidden = tab === 'chart';
   }
 
+  // The tab is built once per stage/tab; later paints only update the live values,
+  // so the images are not reloaded (and do not flicker) four times a second.
+  let tabKey = '';
+  const OUT_NAMES = { YA: 'Bottle filling', YV: 'Positioner (empty-bottle position)', Y1: 'Station 1', Y2: 'Station 2', Y3: 'Station 3', YM: 'Conveyor motor' };
   function paintTab() {
     const s = STAGES[sel], r = readings(s.n);
+    const key = sel + '|' + tab;
     if (tab === 'flow') {
-      const caps = r.slice(0, s.sprites.length === 1 ? 1 : s.sprites.length);
-      $('#tab-dyn').innerHTML = `<div class="pf">${s.sprites.map((sp, k) => `
-        <figure>${caps[k] ? `<figcaption>${esc(caps[k][0])}<b>${fmtReading(caps[k])}</b></figcaption>` : ''}<img class="px" src="${IMG}${sp}.png" alt=""></figure>`).join('')}
-        ${s.n < 7 ? `<div class="arrow">To ${esc(STAGES[s.n].short)}<br>→</div>` : ''}</div>
-        <div class="flow">${s.flow.map(([h, p], k) => `<div class="flow-step"><h4><span class="num">${k + 1}</span>${esc(h)}</h4><p>${esc(p)}</p></div>`).join('')}</div>`;
+      const n = s.sprites.length === 1 ? 1 : s.sprites.length;
+      if (key !== tabKey) {
+        $('#tab-dyn').innerHTML = `<div class="pf">${s.sprites.map((sp, k) => `
+          <figure>${k < n && r[k] ? `<figcaption>${esc(r[k][0])}<b data-v="${k}"></b></figcaption>` : ''}<img class="px" src="${IMG}${sp}.png" alt=""></figure>`).join('')}
+          ${s.n < 7 ? `<div class="arrow">To ${esc(STAGES[s.n].short)}<br>→</div>` : ''}</div>
+          <div class="flow">${s.flow.map(([h, p], k) => `<div class="flow-step"><h4><span class="num">${k + 1}</span>${esc(h)}</h4><p>${esc(p)}</p></div>`).join('')}</div>`;
+      }
+      $$('#tab-dyn [data-v]').forEach(el => { el.innerHTML = fmtReading(r[+el.dataset.v]); });
     } else if (tab === 'io') {
       const cur = MEF[sim.mef.i];
-      const OUT_NAMES = { YA: 'Bottle filling', YV: 'Positioner (empty-bottle position)', Y1: 'Station 1', Y2: 'Station 2', Y3: 'Station 3', YM: 'Conveyor motor' };
       const acts = s.n === 6
         ? MEF_OUTPUTS.map(([o, p]) => ['a_onoff_switch', `${o} — ${OUT_NAMES[o]}`, `ESP32 pin ${p}`, sim.running && cur.out.includes(o)])
         : s.actuators.map(([ic, n, d]) => [ic, n, d, sim.running]);
-      $('#tab-dyn').innerHTML = `<div class="io-list">
-        <div><h4><span class="chip sensor">Sensors</span></h4>${s.sensors.map(([ic, n, d]) => `<div class="io-row"><img class="px" src="${ICON}${ic}.png" alt=""><div>${esc(n)}${d ? `<div class="muted small">${esc(d)}</div>` : ''}</div><span class="st ${sim.running ? 'on' : ''}">${sim.running ? 'READING' : 'IDLE'}</span></div>`).join('')}</div>
-        <div><h4><span class="chip actuator">${s.n === 6 ? 'Controller outputs' : 'Actuators'}</span></h4>${acts.map(([ic, n, d, on]) => `<div class="io-row"><img class="px" src="${ICON}${ic}.png" alt=""><div>${esc(n)}${d ? `<div class="muted small">${esc(d)}</div>` : ''}</div><span class="st ${on ? 'on' : ''}">${on ? 'ON' : 'OFF'}</span></div>`).join('')}</div>
-      </div>`;
+      if (key !== tabKey) {
+        const row = ([ic, n, d], attr) => `<div class="io-row"><img class="px" src="${ICON}${ic}.png" alt=""><div>${esc(n)}${d ? `<div class="muted small">${esc(d)}</div>` : ''}</div><span class="st" ${attr}></span></div>`;
+        $('#tab-dyn').innerHTML = `<div class="io-list">
+          <div><h4><span class="chip sensor">Sensors</span></h4>${s.sensors.map(x => row(x, 'data-sensor')).join('')}</div>
+          <div><h4><span class="chip actuator">${s.n === 6 ? 'Controller outputs' : 'Actuators'}</span></h4>${acts.map((x, k) => row(x, `data-act="${k}"`)).join('')}</div>
+        </div>`;
+      }
+      $$('#tab-dyn [data-sensor]').forEach(el => { el.textContent = sim.running ? 'READING' : 'IDLE'; el.classList.toggle('on', sim.running); });
+      $$('#tab-dyn [data-act]').forEach(el => { const on = acts[+el.dataset.act][3]; el.textContent = on ? 'ON' : 'OFF'; el.classList.toggle('on', on); });
     }
+    tabKey = key;
   }
 
   // ---- chart (single series, crosshair tooltip)

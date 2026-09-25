@@ -21,6 +21,21 @@ designed for **2,000–3,000 units per day**.
 
 **[ecoshamp-process-automation.vercel.app](https://ecoshamp-process-automation.vercel.app/)**
 
+<p align="center">
+  <a href="https://ecoshamp-process-automation.vercel.app/"><img src="docs/images/website_home.png" width="100%" alt="EcoShamp website — home page with the animated production line"></a>
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><a href="https://ecoshamp-process-automation.vercel.app/demo.html"><img src="docs/images/website_demo.png" alt="Interactive demo: simulation controls, live sensor data and the labeling &amp; packaging controller"></a><br><sub><b>Demo</b> — run the line, change speed, fill volume and mixer rpm, and follow the ESP32 state machine live.</sub></td>
+    <td width="50%"><a href="https://ecoshamp-process-automation.vercel.app/process.html"><img src="docs/images/website_process.png" alt="Process page: inputs, flow, sensors and actuators of each subprocess"></a><br><sub><b>Process</b> — the seven subprocesses with inputs, flow, sensors, actuators and notes.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="https://ecoshamp-process-automation.vercel.app/components.html"><img src="docs/images/website_components.png" alt="Components page: filterable catalogue of sensors, actuators and control elements"></a><br><sub><b>Components</b> — filterable catalogue of sensors, actuators and control elements.</sub></td>
+    <td width="50%"><a href="https://ecoshamp-process-automation.vercel.app/about.html"><img src="docs/images/website_about.png" alt="About page: objective, team, technologies and documents"></a><br><sub><b>About</b> — objective, mission and vision, team, technologies and documents.</sub></td>
+  </tr>
+</table>
+
 ---
 
 ## The process
